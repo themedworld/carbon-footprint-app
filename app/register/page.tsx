@@ -18,7 +18,7 @@ export default function RegisterPage() {
     setDarkMode(isDark);
     document.documentElement.classList.toggle("dark", isDark);
   }, []);
-  
+
     const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
@@ -70,7 +70,7 @@ export default function RegisterPage() {
       ],
       color: '#10B981',
       gradient: 'from-green-500 to-green-600',
-      link: '/register/agriculteur'
+      link: '/registeragriculteur'
     }
   ];
 
