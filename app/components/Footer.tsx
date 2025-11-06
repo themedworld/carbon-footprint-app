@@ -11,15 +11,15 @@ export default function Footer() {
           <div className="footer-brand">
             <div className="footer-logo">
               <div className="logo-icon">
-                <span>🌱</span>
+                <span className="clover-icon">🍀</span>
               </div>
               <div className="logo-text">
-                <span className="logo-title">EcoCalc</span>
-                <span className="logo-subtitle">CO2 Agricole</span>
+                <span className="logo-title">Fle7etna</span>
+                <span className="logo-subtitle">Eco Carbonne</span>
               </div>
             </div>
             <p className="footer-description">
-              Plateforme innovante connectant agriculteurs écologiques et entreprises engagées 
+              La première plateforme tunisienne connectant agriculteurs écologiques et entreprises engagées 
               pour un avenir plus durable grâce à l'échange de crédits carbone.
             </p>
             <div className="social-links">
@@ -44,7 +44,7 @@ export default function Footer() {
               <ul className="link-list">
                 <li><a href="#features" className="footer-link">Fonctionnalités</a></li>
                 <li><a href="#how-it-works" className="footer-link">Comment ça marche</a></li>
-                <li><a href="#testimonials" className="footer-link">Témoignages</a></li>
+                <li><a href="#news" className="footer-link">Actualités</a></li>
                 <li><a href="#contact" className="footer-link">Contact</a></li>
               </ul>
             </div>
@@ -64,7 +64,7 @@ export default function Footer() {
               <ul className="link-list">
                 <li className="contact-item">
                   <EmailIcon />
-                  <span>mohamedamintrai@gmail.com</span>
+                  <span>contact@fle7etna-ecocarbonne.tn</span>
                 </li>
                 <li className="contact-item">
                   <PhoneIcon />
@@ -82,12 +82,12 @@ export default function Footer() {
         <div className="footer-bottom">
           <div className="footer-bottom-content">
             <p className="copyright">
-              &copy; {currentYear} EcoCalc. Tous droits réservés.
+              &copy; {currentYear} Fle7etna Eco Carbonne. Tous droits réservés.
             </p>
             <div className="footer-badges">
               <span className="badge">🌱 Éco-responsable</span>
               <span className="badge">🔒 Sécurisé</span>
-              <span className="badge">🇫🇷 Made in Tunisia</span>
+              <span className="badge">🇹🇳 Made in Tunisia</span>
             </div>
           </div>
         </div>

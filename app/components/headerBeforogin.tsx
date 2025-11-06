@@ -1,7 +1,7 @@
 // app/components/Header.tsx
 'use client';
 import { useState, useEffect, ReactNode } from 'react';
-import './Header.css';
+import './styles//headerBeforlogin.css';
 
 interface HeaderProps {
   darkMode: boolean;
@@ -25,39 +25,44 @@ export default function Header({ darkMode, toggleDarkMode, children }: HeaderPro
     <header className={`header ${isScrolled ? 'header-scrolled' : ''} ${darkMode ? 'dark' : ''}`}>
       <div className="header-container">
         <div className="header-content">
-          {/* Logo */}
+          {/* Logo Fle7etna */}
           <div className="logo">
             <div className="logo-icon">
-              <span>🌱</span>
+              <svg className="fleur-logo" viewBox="0 0 100 100" fill="none">
+                {/* Cœur de la fleur */}
+                <circle cx="50" cy="50" r="12" className="fleur-coeur" />
+                
+                {/* Pétales - Trèfle à 4 feuilles */}
+                <ellipse cx="35" cy="35" rx="15" ry="20" className="fleur-petale" transform="rotate(-45 35 35)" />
+                <ellipse cx="65" cy="35" rx="15" ry="20" className="fleur-petale" transform="rotate(45 65 35)" />
+                <ellipse cx="35" cy="65" rx="15" ry="20" className="fleur-petale" transform="rotate(45 35 65)" />
+                <ellipse cx="65" cy="65" rx="15" ry="20" className="fleur-petale" transform="rotate(-45 65 65)" />
+                
+                {/* Tige */}
+                <rect x="48" y="70" width="4" height="20" className="fleur-tige" />
+              </svg>
             </div>
             <div className="logo-text">
-              <span className="logo-title">EcoCalc</span>
-              <span className="logo-subtitle">CO₂ Agricole</span>
+              <span className="logo-title">Fle7etna</span>
+              <span className="logo-subtitle">Eco Carbonne</span>
             </div>
           </div>
 
-          {/* Navigation Desktop - Maintenant les enfants passent ici */}
+          {/* Navigation Desktop */}
           <nav className="desktop-nav">
             {children}
           </nav>
 
           {/* Actions */}
           <div className="header-actions">
-            {/* Dark Mode Toggle */}
+            {/* Dark Mode Toggle avec texte */}
             <button
               onClick={toggleDarkMode}
-              className="theme-toggle"
+              className="theme-toggle-text"
               aria-label={darkMode ? "Mode clair" : "Mode sombre"}
             >
-              {darkMode ? (
-                <svg className="theme-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              ) : (
-                <svg className="theme-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              )}
+              <span className="theme-text">{darkMode ? '☀️' : '🌙'}</span>
+              
             </button>
 
             {/* Auth Buttons Desktop */}
@@ -66,7 +71,7 @@ export default function Header({ darkMode, toggleDarkMode, children }: HeaderPro
                 Connexion
               </a>
               <a href="/register" className="register-btn">
-                S inscrire
+                S'inscrire
               </a>
             </div>
 
@@ -88,14 +93,25 @@ export default function Header({ darkMode, toggleDarkMode, children }: HeaderPro
         {/* Mobile Menu */}
         <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
           <nav className="mobile-nav">
-            {/* Les enfants sont aussi affichés dans le menu mobile */}
             {children}
+            <div className="mobile-theme-toggle">
+              <button
+                onClick={() => {
+                  toggleDarkMode();
+                  setIsMenuOpen(false);
+                }}
+                className="theme-toggle-mobile"
+              >
+                <span>{darkMode ? '☀️' : '🌙'}</span>
+                <span>Mode {darkMode ? 'Clair' : 'Sombre'}</span>
+              </button>
+            </div>
             <div className="mobile-auth-buttons">
               <a href="/login" className="mobile-login-btn" onClick={() => setIsMenuOpen(false)}>
                 Connexion
               </a>
               <a href="/register" className="mobile-register-btn" onClick={() => setIsMenuOpen(false)}>
-                S inscrire
+                S'inscrire
               </a>
             </div>
           </nav>

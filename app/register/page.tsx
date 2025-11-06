@@ -16,37 +16,33 @@ export default function RegisterPage() {
     
     const isDark = storedDarkMode === "true" || (!storedDarkMode && systemPrefersDark);
     setDarkMode(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
+    document.documentElement.classList.toggle("dark-mode", isDark);
   }, []);
 
-    const toggleDarkMode = () => {
+  const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
-    document.documentElement.classList.toggle("dark", newDarkMode);
+    document.documentElement.classList.toggle("dark-mode", newDarkMode);
     localStorage.setItem("darkMode", newDarkMode.toString());
   };
 
-
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="loading-container">
         <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-        <div className="flex items-center justify-center min-h-[80vh]">
-          <div className="text-center">Chargement...</div>
+        <div className="loading-content">
+          <div className="loading-text">Chargement...</div>
         </div>
       </div>
     );
   }
-
-
-
 
   const userTypes = [
     {
       id: 'entrepreneur',
       title: 'Entrepreneur',
       description: 'Entreprise souhaitant compenser son empreinte carbone',
-      icon: '🏢',
+      badge: 'Entreprise',
       features: [
         'Compensez votre empreinte carbone',
         'Soutenez l\'agriculture durable',
@@ -54,14 +50,14 @@ export default function RegisterPage() {
         'Bénéficiez de certificats vérifiés'
       ],
       color: '#3B82F6',
-      gradient: 'from-blue-500 to-blue-600',
+      gradient: 'linear-gradient(135deg, #3B82F6, #6366F1)',
       link: '/registerentreprise'
     },
     {
       id: 'agriculteur',
       title: 'Agriculteur',
       description: 'Producteur agricole avec des pratiques durables',
-      icon: '👩‍🌾',
+      badge: 'Producteur',
       features: [
         'Valorisez vos crédits carbone',
         'Générez des revenus supplémentaires',
@@ -69,83 +65,108 @@ export default function RegisterPage() {
         'Rejoignez un réseau d\'agriculteurs'
       ],
       color: '#10B981',
-      gradient: 'from-green-500 to-green-600',
+      gradient: 'linear-gradient(135deg, #10B981, #059669)',
       link: '/registeragriculteur'
     }
   ];
 
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="register-page">
       <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      <br />
-      <br /><br /><br />
-      <div className="register-page">
-        <div className="register-container">
-          {/* Header */}
-          <div className="register-header">
-            <div className="header-content">
-              <h1 className="page-title">Choisissez votre profil</h1>
-              <p className="page-subtitle">
-                Rejoignez notre plateforme et participez à la transition écologique
-              </p>
+      
+      {/* Background Elements */}
+      <div className="background-elements">
+        <div className="bg-circle bg-circle-1"></div>
+        <div className="bg-circle bg-circle-2"></div>
+        <div className="bg-circle bg-circle-3"></div>
+      </div>
+
+      <div className="register-container">
+        {/* Header Section */}
+        <div className="register-header">
+          <div className="header-content">
+            <div className="title-wrapper">
+              <div className="accent-bar"></div>
+              <h1 className="page-title">
+                Rejoignez <span className="brand-name">Fle7etna</span>
+              </h1>
             </div>
+            <p className="page-subtitle">
+              Choisissez votre rôle dans notre écosystème durable et participez à la 
+              <span className="highlight-text"> transition écologique</span>
+            </p>
           </div>
+        </div>
 
-          {/* Cards Grid */}
-          <div className="cards-grid">
-            {userTypes.map((userType) => (
-              <div
-                key={userType.id}
-                className={`card ${hoveredCard === userType.id ? 'card-hovered' : ''}`}
-                onMouseEnter={() => setHoveredCard(userType.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                style={{ '--accent-color': userType.color } as React.CSSProperties}
-              >
-                <div className="card-inner">
-                  {/* Card Header */}
-                  <div className="card-header">
-                    <div className="icon-wrapper">
-                      <span className="icon">{userType.icon}</span>
-                    </div>
-                    <h2 className="card-title">{userType.title}</h2>
-                    <p className="card-description">{userType.description}</p>
+        {/* Cards Grid */}
+        <div className="cards-grid">
+          {userTypes.map((userType) => (
+            <div
+              key={userType.id}
+              className={`card ${hoveredCard === userType.id ? 'card-hovered' : ''} ${
+                hoveredCard && hoveredCard !== userType.id ? 'card-blurred' : ''
+              }`}
+              onMouseEnter={() => setHoveredCard(userType.id)}
+              onMouseLeave={() => setHoveredCard(null)}
+              style={{ '--accent-color': userType.color } as React.CSSProperties}
+            >
+              {/* Card Background */}
+              <div className="card-bg" style={{ background: userType.gradient }}></div>
+              
+              <div className="card-content">
+                {/* Card Header */}
+                <div className="card-header">
+                  <div className="badge-container">
+                    <span className="profile-badge">{userType.badge}</span>
                   </div>
+                  
+                  <div className="title-section">
+                    <h2 className="card-title">{userType.title}</h2>
+                    <div className="title-underline"></div>
+                  </div>
+                  
+                  <p className="card-description">{userType.description}</p>
+                </div>
 
-                  {/* Features List */}
-                  <ul className="features-list">
-                    {userType.features.map((feature, index) => (
-                      <li key={index} className="feature-item">
-                        <span className="check-icon">✓</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+                {/* Features List */}
+                <ul className="features-list">
+                  {userType.features.map((feature, index) => (
+                    <li key={index} className="feature-item">
+                      <div className="feature-icon"></div>
+                      <span className="feature-text">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
 
-                  {/* CTA Button */}
-                  <a href={userType.link} className="card-button">
-                    <span>S inscrire en tant que {userType.title.toLowerCase()}</span>
-                    <svg className="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                {/* CTA Button */}
+                <div className="card-actions">
+                  <a 
+                    href={userType.link} 
+                    className="card-button"
+                    style={{ backgroundColor: userType.color }}
+                  >
+                    <span className="button-text">Commencer l'aventure</span>
+                    <div className="button-arrow">→</div>
                   </a>
-
-                  {/* Hover Effects */}
-                  <div className="card-hover-effect"></div>
-                  <div className="card-glow-effect"></div>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Footer CTA */}
-<br /><br /><br />
+              {/* Hover Effects */}
+              <div className="card-glow"></div>
+            </div>
+          ))}
+        </div>
 
-          <div className="footer-cta">
+        {/* Footer CTA */}
+        <div className="footer-cta">
+          <div className="cta-container">
             <p className="cta-text">
-              Déjà un compte ?{' '}
-              <a href="/login" className="login-link">Connectez-vous</a>
+              Déjà membre de notre communauté durable ?
             </p>
+            <a href="/login" className="login-link">
+              <span>Accédez à votre espace</span>
+              <div className="link-arrow">→</div>
+            </a>
           </div>
         </div>
       </div>

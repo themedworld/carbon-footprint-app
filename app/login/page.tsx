@@ -2,12 +2,13 @@
 'use client';
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from './../components/headerBeforogin';
 import './LoginPage.css';
 
 interface LoginFormData {
-  email: string;
+  companyEmail: string;
   password: string;
   rememberMe: boolean;
 }
@@ -17,6 +18,8 @@ export default function LoginPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState<string>('');
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -25,109 +28,131 @@ export default function LoginPage() {
     
     const isDark = storedDarkMode === "true" || (!storedDarkMode && systemPrefersDark);
     setDarkMode(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
+    document.documentElement.classList.toggle("dark-mode", isDark);
   }, []);
 
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
-    document.documentElement.classList.toggle("dark", newDarkMode);
+    document.documentElement.classList.toggle("dark-mode", newDarkMode);
     localStorage.setItem("darkMode", newDarkMode.toString());
   };
 
   const onSubmit = async (data: LoginFormData) => {
-    // Simulation d'authentification
-    console.log('Données de connexion:', data);
+    setLoginError('');
     
-    // Ici vous enverriez les données à votre API d'authentification
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Redirection ou message de succès
-    alert('Connexion réussie ! Redirection...');
-    // router.push('/dashboard');
+    try {
+      const response = await fetch('http://localhost:3001/api/v1/company/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          companyEmail: data.companyEmail,
+          password: data.password
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Connexion réussie:', result);
+        
+        if (result.token) {
+          localStorage.setItem('authToken', result.token);
+        }
+        
+        router.push('/dashboardcompany');
+        
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur de connexion');
+      }
+    } catch (error) {
+      console.error('Erreur de connexion:', error);
+      setLoginError((error as Error).message || 'Erreur lors de la connexion');
+    }
   };
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="login-page-loading">
         <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-        <div className="flex items-center justify-center min-h-[80vh]">
-          <div className="text-center">Chargement...</div>
+        <div className="loading-content">
+          <div className="loading-spinner-large"></div>
+          <div className="loading-text">Chargement...</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`login-page ${darkMode ? 'dark' : ''}`}>
+    <div className="login-page">
       <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      <br /><br /><br /><br />
+      <br/><br/><br/>
       <div className="login-container">
         <div className="login-wrapper">
           {/* Carte de connexion */}
           <div className="login-card">
             {/* En-tête */}
             <div className="login-header">
-              <div className="logo">
-                <div className="logo-icon">🌱</div>
-                <div className="logo-text">
-                  <h1>CarbonTrack</h1>
-                  <span>CO₂ Agricole</span>
-                </div>
+              <div className="logo-section">
+                <h1 className="logo-main">Fle7etna</h1>
+                <p className="logo-subtitle">eCo Carbonne</p>
               </div>
-              <h2 className="login-title">Connexion à votre compte</h2>
-              <p className="login-subtitle">
-                Accédez à votre tableau de bord et gérez vos crédits carbone
-              </p>
+              <div className="welcome-section">
+                <h2 className="login-title">Connexion Entreprise</h2>
+                <p className="login-subtitle">
+                  Accédez à votre espace de gestion
+                </p>
+              </div>
             </div>
+
+            {/* Message d'erreur */}
+            {loginError && (
+              <div className="error-banner">
+                <span className="error-text">{loginError}</span>
+              </div>
+            )}
 
             {/* Formulaire */}
             <form onSubmit={handleSubmit(onSubmit)} className="login-form">
               <div className="form-group">
-                <label htmlFor="email" className="form-label">
-                  Adresse email <span className="required-star">*</span>
+                <label htmlFor="companyEmail" className="form-label">
+                  Email professionnel
                 </label>
-                <div className="input-wrapper">
-                  <svg className="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <input
-                    id="email"
-                    type="email"
-                    className={`form-input ${errors.email ? 'error' : ''}`}
-                    placeholder="votre@email.com"
-                    {...register("email", {
-                      required: "L'email est requis",
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "Adresse email invalide"
-                      }
-                    })}
-                  />
-                </div>
-                {errors.email && (
-                  <span className="error-message">{errors.email.message}</span>
+                <input
+                  id="companyEmail"
+                  type="email"
+                  className={`form-input ${errors.companyEmail ? 'error' : ''}`}
+                  placeholder="votre@entreprise.com"
+                  {...register("companyEmail", {
+                    required: "L'email professionnel est requis",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Adresse email invalide"
+                    }
+                  })}
+                />
+                {errors.companyEmail && (
+                  <span className="error-message">{errors.companyEmail.message}</span>
                 )}
               </div>
 
               <div className="form-group">
                 <label htmlFor="password" className="form-label">
-                  Mot de passe <span className="required-star">*</span>
+                  Mot de passe
                 </label>
-                <div className="input-wrapper">
-                  <svg className="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
+                <div className="password-input-wrapper">
                   <input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     className={`form-input ${errors.password ? 'error' : ''}`}
-                    placeholder="••••••••"
+                    placeholder="Votre mot de passe"
                     {...register("password", {
                       required: "Le mot de passe est requis",
                       minLength: {
-                        value: 8,
-                        message: "Le mot de passe doit contenir au moins 8 caractères"
+                        value: 6,
+                        message: "Le mot de passe doit contenir au moins 6 caractères"
                       }
                     })}
                   />
@@ -135,15 +160,8 @@ export default function LoginPage() {
                     type="button"
                     className="password-toggle"
                     onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
                   >
-                    <svg className="eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      {showPassword ? (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-                      ) : (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                      )}
-                    </svg>
+                    {showPassword ? 'Masquer' : 'Afficher'}
                   </button>
                 </div>
                 {errors.password && (
@@ -174,79 +192,65 @@ export default function LoginPage() {
               >
                 {isSubmitting ? (
                   <>
-                    <div className="spinner"></div>
+                    <div className="button-spinner"></div>
                     Connexion...
                   </>
                 ) : (
-                  <>
-                    <svg className="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                    </svg>
-                    Se connecter
-                  </>
+                  'Se connecter'
                 )}
               </button>
             </form>
 
             {/* Lien d'inscription */}
-            <div className="login-footer">
-              <p>
-                Pas encore de compte ?{' '}
+            <div className="register-section">
+              <p className="register-text">
+                Nouvelle entreprise ?{' '}
                 <Link href="/register" className="register-link">
-                  S'inscrire maintenant
+                  Créer un compte
                 </Link>
               </p>
             </div>
           </div>
 
-          {/* Section informations - Masquée sur mobile */}
-          <div className="login-side">
-            <div className="side-content">
-              <div className="welcome-message">
-                <h2>Bienvenue sur CarbonTrack</h2>
-                <p>La plateforme qui connecte agriculteurs et entreprises pour un avenir plus durable</p>
+          {/* Section informations */}
+          <div className="info-section">
+            <div className="info-content">
+              <div className="mission-card">
+                <h3>Votre partenaire durable</h3>
+                <p>Rejoignez des centaines d'entreprises engagées dans la compensation carbone</p>
               </div>
 
-              <div className="feature-list">
+              <div className="features-list">
                 <div className="feature-item">
-                  <div className="feature-icon">🌾</div>
-                  <div className="feature-text">
-                    <h3>Pour les Agriculteurs</h3>
-                    <p>Valorisez vos pratiques durables et générez des revenus supplémentaires grâce aux crédits carbone</p>
-                  </div>
+                  <h4>Tableau de bord complet</h4>
+                  <p>Suivez vos émissions et crédits carbone en temps réel</p>
                 </div>
                 
                 <div className="feature-item">
-                  <div className="feature-icon">🏢</div>
-                  <div className="feature-text">
-                    <h3>Pour les Entreprises</h3>
-                    <p>Compensez votre empreinte carbone en soutenant directement l'agriculture durable française</p>
-                  </div>
+                  <h4>Réseau d'agriculteurs</h4>
+                  <p>Connectez-vous avec des partenaires durables vérifiés</p>
                 </div>
                 
                 <div className="feature-item">
-                  <div className="feature-icon">📊</div>
-                  <div className="feature-text">
-                    <h3>Suivi en Temps Réel</h3>
-                    <p>Accédez à votre tableau de bord complet pour suivre vos crédits, transactions et impact environnemental</p>
-                  </div>
+                  <h4>Impact mesurable</h4>
+                  <p>Visualisez votre contribution environnementale</p>
                 </div>
               </div>
-              
+
               <div className="stats-card">
-                <h4>Notre Impact Collectif</h4>
+                <h4>Notre communauté</h4>
                 <div className="stats-grid">
                   <div className="stat">
-                    <div className="stat-value">500+</div>
+                    <div className="stat-number">250+</div>
+                    <div className="stat-label">Entreprises</div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-number">500+</div>
                     <div className="stat-label">Agriculteurs</div>
                   </div>
                   <div className="stat">
-                    <div className="stat-value">10K+</div>
-                    <div className="stat-label">Crédits vendus</div>
-                  </div>
-                  <div className="stat">
-                    <div className="stat-value">5K+</div>
-                    <div className="stat-label">Tonnes CO₂ compensées</div>
+                    <div className="stat-number">10K+</div>
+                    <div className="stat-label">Tonnes CO₂</div>
                   </div>
                 </div>
               </div>

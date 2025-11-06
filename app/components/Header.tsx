@@ -1,14 +1,15 @@
 // app/components/Header.tsx
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import './Header.css';
 
 interface HeaderProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
+  children?: ReactNode;
 }
 
-export default function Header({ darkMode, toggleDarkMode }: HeaderProps) {
+export default function Header({ darkMode, toggleDarkMode, children }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -27,11 +28,11 @@ export default function Header({ darkMode, toggleDarkMode }: HeaderProps) {
           {/* Logo */}
           <div className="logo">
             <div className="logo-icon">
-              <span>🌱</span>
+              <span className="clover-icon">🍀</span>
             </div>
             <div className="logo-text">
-              <span className="logo-title">EcoCalc</span>
-              <span className="logo-subtitle">CO₂ Agricole</span>
+              <span className="logo-title">Fle7etna</span>
+              <span className="logo-subtitle">Eco Carbonne</span>
             </div>
           </div>
 
@@ -76,7 +77,7 @@ export default function Header({ darkMode, toggleDarkMode }: HeaderProps) {
                 Connexion
               </a>
               <a href="/register" className="register-btn">
-                S inscrire
+                S'inscrire
               </a>
             </div>
 
@@ -94,6 +95,13 @@ export default function Header({ darkMode, toggleDarkMode }: HeaderProps) {
             </button>
           </div>
         </div>
+
+        {/* Children Content */}
+        {children && (
+          <div className="header-children">
+            {children}
+          </div>
+        )}
 
         {/* Mobile Menu */}
         <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
@@ -115,7 +123,7 @@ export default function Header({ darkMode, toggleDarkMode }: HeaderProps) {
                 Connexion
               </a>
               <a href="/register" className="mobile-register-btn" onClick={() => setIsMenuOpen(false)}>
-                S inscrire
+                S'inscrire
               </a>
             </div>
           </nav>
