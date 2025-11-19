@@ -1,0 +1,316 @@
+/* LoginChoice.css */
+.login-choice-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  transition: all 0.3s ease;
+}
+
+.login-choice-page.dark {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.login-choice-container {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.login-choice-content {
+  text-align: center;
+}
+
+/* En-tête */
+.login-header {
+  margin-bottom: 4rem;
+}
+
+.login-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .login-title {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-highlight {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-subtitle {
+  font-size: 1.25rem;
+  color: #718096;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.dark .login-subtitle {
+  color: #cbd5e0;
+}
+
+/* Cartes de choix */
+.choice-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.choice-card {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.dark .choice-card {
+  background: #2d3748;
+  border-color: #4a5568;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.choice-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.dark .choice-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.choice-card.hovered {
+  transform: translateY(-10px);
+}
+
+/* Icônes */
+.card-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.agriculteur-card .card-icon {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+}
+
+.company-card .card-icon {
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  color: white;
+}
+
+/* Contenu des cartes */
+.card-content {
+  margin-bottom: 2rem;
+}
+
+.card-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #2d3748;
+}
+
+.dark .card-title {
+  color: #f7fafc;
+}
+
+.card-description {
+  color: #718096;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.dark .card-description {
+  color: #cbd5e0;
+}
+
+.card-features {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.card-features li {
+  padding: 0.5rem 0;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.dark .card-features li {
+  color: #e2e8f0;
+}
+
+/* Boutons */
+.card-action {
+  margin-top: auto;
+}
+
+.choice-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.agriculteur-btn {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+}
+
+.agriculteur-btn:hover {
+  background: linear-gradient(135deg, #38a169, #2f855a);
+  transform: translateX(5px);
+}
+
+.company-btn {
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+  color: white;
+}
+
+.company-btn:hover {
+  background: linear-gradient(135deg, #3182ce, #2c5aa0);
+  transform: translateX(5px);
+}
+
+.btn-arrow {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.choice-btn:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* Décorations */
+.card-decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  opacity: 0.1;
+  transition: opacity 0.3s ease;
+}
+
+.choice-card:hover .card-decoration {
+  opacity: 0.2;
+}
+
+.agriculteur-decoration {
+  background: radial-gradient(circle, #48bb78 0%, transparent 70%);
+}
+
+.company-decoration {
+  background: radial-gradient(circle, #4299e1 0%, transparent 70%);
+}
+
+/* Section informative */
+.info-section {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .info-section {
+  background: rgba(45, 55, 72, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.info-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.dark .info-title {
+  color: #f7fafc;
+}
+
+.info-text {
+  color: #718096;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.dark .info-text {
+  color: #cbd5e0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-title {
+    font-size: 2rem;
+  }
+  
+  .choice-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .choice-card {
+    padding: 2rem;
+  }
+  
+  .login-choice-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-title {
+    font-size: 1.75rem;
+  }
+  
+  .choice-card {
+    padding: 1.5rem;
+  }
+  
+  .card-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .icon {
+    width: 30px;
+    height: 30px;
+  }
+}

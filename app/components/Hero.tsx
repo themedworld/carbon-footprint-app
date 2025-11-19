@@ -78,7 +78,7 @@ export default function Hero() {
                 <div className="feature-card feature-card-green">
                   <div className="feature-image-wrapper">
                     <Image
-                      src="/images/hero/co25.png"
+                     src="https://drive.google.com/uc?export=view&id=1BPAE7ROy1HzIh0WMmEVzhvRlATFOTuqE"
                       alt="Agriculture durable en Tunisie"
                       width={60}
                       height={60}
@@ -96,7 +96,7 @@ export default function Hero() {
                 <div className="feature-card feature-card-blue">
                   <div className="feature-image-wrapper">
                     <Image
-                      src="/images/hero/co24.png"
+                      src="https://drive.google.com/uc?export=view&id=1HOqI3ZZvepA0yv08ICNMx8WaF3QEKLi6"
                       alt="Entreprise éco-responsable"
                       width={60}
                       height={60}
@@ -114,7 +114,7 @@ export default function Hero() {
                 <div className="feature-card feature-card-orange">
                   <div className="feature-image-wrapper">
                     <Image
-                      src="/images/hero/co26.png"
+                      src="https://drive.google.com/uc?export=view&id=1oOrh6hImp_Sofr-zbw4n2Zb6hktItuUG"
                       alt="Revenus supplémentaires pour agriculteurs"
                       width={60}
                       height={60}
@@ -132,7 +132,7 @@ export default function Hero() {
                 <div className="feature-card feature-card-purple">
                   <div className="feature-image-wrapper">
                     <Image
-                      src="/images/hero/co27.png"
+                      src="https://drive.google.com/uc?export=view&id=1iZgP9hjiEGyfPIuuLNrZo3KeYcNU8gTU"
                       alt="Impact environnemental positif"
                       width={60}
                       height={60}

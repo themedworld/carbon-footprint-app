@@ -67,7 +67,7 @@ export default function Header({ darkMode, toggleDarkMode, children }: HeaderPro
 
             {/* Auth Buttons Desktop */}
             <div className="auth-buttons">
-              <a href="/login" className="login-btn">
+              <a href="/loginchoce" className="login-btn">
                 Connexion
               </a>
               <a href="/register" className="register-btn">
@@ -107,7 +107,7 @@ export default function Header({ darkMode, toggleDarkMode, children }: HeaderPro
               </button>
             </div>
             <div className="mobile-auth-buttons">
-              <a href="/login" className="mobile-login-btn" onClick={() => setIsMenuOpen(false)}>
+              <a href="/loginchoce" className="mobile-login-btn" onClick={() => setIsMenuOpen(false)}>
                 Connexion
               </a>
               <a href="/register" className="mobile-register-btn" onClick={() => setIsMenuOpen(false)}>

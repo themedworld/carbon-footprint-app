@@ -36,7 +36,7 @@ export default function News() {
       author: "Dr. Sarah Chen",
       date: "15 Mars 2024",
       readTime: "4 min",
-      image: "/images/news/news2.png",
+      image: "https://drive.google.com/uc?export=view&id=1iZgP9hjiEGyfPIuuLNrZo3KeYcNU8gTU",
       tags: ["compensation", "innovation", "durabilité"],
       featured: true,
       likes: 42
@@ -50,7 +50,7 @@ export default function News() {
       author: "Tech Team",
       date: "12 Mars 2024",
       readTime: "3 min",
-      image: "/images/news/news3.png",
+      image: "https://drive.google.com/uc?export=view&id=19ANA8r1XfhY2eoRUo29sZJoG5FvD91Dh",
       tags: ["mobile", "technologie", "innovation"],
       featured: false,
       likes: 38
@@ -64,7 +64,7 @@ export default function News() {
       author: "Relations Publiques",
       date: "10 Mars 2024",
       readTime: "5 min",
-      image: "/images/news/news4.png",
+      image: "https://drive.google.com/uc?export=view&id=1MoVo5oY-6b2XsaRq3IAXqej8HhcpKHzF",
       tags: ["partenariat", "gouvernement", "écologie"],
       featured: false,
       likes: 56
@@ -145,7 +145,7 @@ export default function News() {
                     width={800}
                     height={400}
                     className="featured-img"
-                    priority
+                
                   />
                   <div className="featured-badge-main">Article vedette</div>
                 </div>
