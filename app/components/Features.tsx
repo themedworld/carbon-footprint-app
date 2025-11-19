@@ -97,7 +97,10 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              ref={(el) => (featuresRef.current[index] = el)}
+              ref={(el) => {
+  featuresRef.current[index] = el;
+}}
+
               className={`feature-card ${index === activeFeature ? 'active' : ''}`}
               onMouseEnter={() => setActiveFeature(index)}
               style={{ '--feature-color': feature.color } as React.CSSProperties}
